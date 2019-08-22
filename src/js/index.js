@@ -66,6 +66,7 @@ const controlRecipe = async (id) => {
         try{
         //Prepare UI for change
         state.recipe = new Recipe(id);
+        window.r = state.recipe;
         //Create new recipe object
         await state.recipe.getRecipe();   
         //Calculate Serving and Time
