@@ -6,6 +6,7 @@ const priceCoffe = searchview.add(45,15);
 console.log(`I calculate some form imported function from searchView ${priceCoffe}`);*/
 import Search from './models/search';
 import Recipe from './models/recipe';
+import * as fakeRecipies from './models/fake_recipes'
 import * as searchView from './views/searchViews';
 import {elements, renderLoader, clearLoader} from './views/base';
 
@@ -64,14 +65,15 @@ const controlRecipe = async (id) => {
 
     if(id){
         try{
+        console.log(`Hace la operación con la Id siguiente ------>>> ${id}`)
         //Prepare UI for change
-        state.recipe = new Recipe(id);
-        window.r = state.recipe;
+        Window.r = state.recipe;
         //Create new recipe object
-        await state.recipe.getRecipe();   
+        state.recipe = new Recipe(id);
+        state.recipe.getRecipe();    
         //Calculate Serving and Time
-        state.recipe.calcTime();
-        state.recipe.calcServing();
+       state.recipe.calcTime();
+       state.recipe.calcServing();
         //Render recipe
         }catch(exception){
             console.log(exception);
