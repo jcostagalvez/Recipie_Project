@@ -10,7 +10,6 @@ export default class Recipe{
         try{
             console.log("Va hacer la llamada");
             const res = await axios(`${proxy}https://www.food2fork.com/api/get?key=${key}&rId=${this.id}`);
-    
             this.title = res.data.recipe.title;
             this.author = res.data.recipe.author;
             this.img = res.data.recipe.img;
@@ -52,7 +51,19 @@ export default class Recipe{
         //there is a unit
         if(unitIndex > -1){
         // just a number
+            const arrCount = arrIng.slice(0, unitIndex);ç
+            let count;
+            if(arrCount.length === 1){
+                count = eval(arrIng.slice(0, unitIndex).replace('-', '+'));
+            }else{
+                count = eval(arrIng.slice(0, unitIndex).join('+'));
+            }
 
+            objIng = { 
+                count,
+                unit: arrIng[unitIndex],
+                ingredients: arrIng.slice(unitIndex + 1).join(' ')
+            }
         // more than one number
         
         }

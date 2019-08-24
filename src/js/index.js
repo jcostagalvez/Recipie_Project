@@ -6,7 +6,6 @@ const priceCoffe = searchview.add(45,15);
 console.log(`I calculate some form imported function from searchView ${priceCoffe}`);*/
 import Search from './models/search';
 import Recipe from './models/recipe';
-import * as fakeRecipies from './models/fake_recipes'
 import * as searchView from './views/searchViews';
 import {elements, renderLoader, clearLoader} from './views/base';
 
@@ -70,7 +69,9 @@ const controlRecipe = async (id) => {
         Window.r = state.recipe;
         //Create new recipe object
         state.recipe = new Recipe(id);
-        state.recipe.getRecipe();    
+        await state.recipe.getRecipe(); 
+        console.log(state.recipe.parseIngredients());
+        state.recipe.parseIngredients();   
         //Calculate Serving and Time
        state.recipe.calcTime();
        state.recipe.calcServing();
