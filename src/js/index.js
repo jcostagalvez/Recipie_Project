@@ -7,6 +7,7 @@ console.log(`I calculate some form imported function from searchView ${priceCoff
 import Search from './models/search';
 import Recipe from './models/recipe';
 import * as searchView from './views/searchViews';
+import {renderRecipe} from './views/recipeView';
 import {elements, renderLoader, clearLoader} from './views/base';
 
 /* Global state of the app
@@ -66,16 +67,18 @@ const controlRecipe = async (id) => {
         try{
         console.log(`Hace la operación con la Id siguiente ------>>> ${id}`)
         //Prepare UI for change
-        Window.r = state.recipe;
+        renderLoader(elements.recipe)
         //Create new recipe object
         state.recipe = new Recipe(id);
         await state.recipe.getRecipe(); 
-        console.log(state.recipe.parseIngredients());
+        //console.log(state.recipe.parseIngredients());
         state.recipe.parseIngredients();   
         //Calculate Serving and Time
        state.recipe.calcTime();
        state.recipe.calcServing();
         //Render recipe
+        clearLoader();
+        renderRecipe(state.recipe)
         }catch(exception){
             console.log(exception);
         };

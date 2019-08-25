@@ -12,8 +12,9 @@ export default class Recipe{
             const res = await axios(`${proxy}https://www.food2fork.com/api/get?key=${key}&rId=${this.id}`);
             this.title = res.data.recipe.title;
             this.author = res.data.recipe.author;
-            this.img = res.data.recipe.img;
+            this.img = res.data.recipe.image_url;
             this.ingredients = res.data.recipe.ingredients;
+            this.url = res.data.recipe.url;
             console.log(res);
         }catch(exception){
             console.log(exception);
@@ -35,12 +36,14 @@ export default class Recipe{
 
         const unitLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teasspoons', 'teasspoon', 'cups', 'pounds'];
         const unitShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
-
+        
         const newIngredients = this.ingredients.map(el =>{
         //1. Uniform Units
-            let ingredient = el.toLowerCase();
+        console.log(`Es el elemento de texto  ${typeof el === 'string'}`)
+            //console.log(el.toLowerCase());
+            let ingredient = el.toLowerCase();  
             unitLong.forEach((unit, i) =>{
-                ingredient = ingredient.replace(unit, unitShort[i]);
+                ingredient = el.replace(unit, unitShort[i]);
             })
         //2.Remove parenthes
             ingredient = ingredient.replace(/ *\([^)]*\) */g, ' ');
@@ -51,18 +54,18 @@ export default class Recipe{
         //there is a unit
         if(unitIndex > -1){
         // just a number
-            const arrCount = arrIng.slice(0, unitIndex);ç
+            const arrCount = arrIng.slice(0, unitIndex);
             let count;
             if(arrCount.length === 1){
-                count = eval(arrIng.slice(0, unitIndex).replace('-', '+'));
+                count = eval(arrIng[0].replace('-', '+'));
             }else{
                 count = eval(arrIng.slice(0, unitIndex).join('+'));
             }
 
             objIng = { 
-                count,
+                quantity: count,
                 unit: arrIng[unitIndex],
-                ingredients: arrIng.slice(unitIndex + 1).join(' ')
+                ingredient: arrIng.slice(unitIndex + 1).join(' ')
             }
         // more than one number
         
@@ -73,19 +76,20 @@ export default class Recipe{
             objIng = {
                 quantity: parseInt(arrIng[0], 10),
                 unit: '',
-                ingridient,
                 ingredient : arrIng.slice(1).join(' '),
             }
         }
         //there is no unit
         else if(unitIndex === -1){
+
             objIng = {
             quantity: 1,
-            unit: '',
-            ingridient,
+            unit:' ',
+            ingridient: arrIng.join(' '),
         }
+        console.log(`es indefinido ${objIng.ingridient}`)
         }
-            return ingredient;
+            return objIng;
         });
 
         this.ingredients = newIngredients

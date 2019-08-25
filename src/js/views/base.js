@@ -11,6 +11,7 @@ export const elements = {
         authorResult : document.querySelector('.results__author'),
         imgResult : document.getElementById('recipie_img'),
     },
+    recipe: document.querySelector('.recipe'),
 };
 
 const elementsString = {
