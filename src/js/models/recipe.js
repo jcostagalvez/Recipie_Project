@@ -81,14 +81,22 @@ export default class Recipe{
         }
         //there is no unit
         else if(unitIndex === -1){
+            if(arrIng.join(' ') === '_____'){
+                console.log('omitir este elemento al carecer de valor');
+                objIng = {
+                    quantity: null,
+                    unit: null,
+                    ingredient: null,
+                }
 
-            objIng = {
-            quantity: 1,
-            unit:' ',
-            ingridient: arrIng.join(' '),
+            } else{
+                objIng = {
+                    quantity: 1,
+                    unit:'',
+                    ingredient: arrIng.join(' '),
+            }
         }
-        console.log(`es indefinido ${objIng.ingridient}`)
-        }
+    }
             return objIng;
         });
 
