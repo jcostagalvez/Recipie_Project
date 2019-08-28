@@ -9,6 +9,15 @@ export const clearResults = () =>{
     elements.searchResPages.innerHTML ='';
 };
 
+export const highLigthSelect = (id) => {
+
+    const resultsAarr = Array.from(document.querySelector('.results__link'));
+    resultsAarr.forEach(el => {
+        el.classList.remove('.results__link--active');
+    });
+    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+};
+
 const limitTitleRecipie = (title, limit = 17) => {
     const newTitle = [];
     if(title.length > limit){

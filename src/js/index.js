@@ -7,9 +7,8 @@ console.log(`I calculate some form imported function from searchView ${priceCoff
 import Search from './models/search';
 import Recipe from './models/recipe';
 import * as searchView from './views/searchViews';
-import {renderRecipe} from './views/recipeView';
+import {renderRecipe, clearRecipe} from './views/recipeView';
 import {elements, renderLoader, clearLoader} from './views/base';
-
 /* Global state of the app
 * - Search object 
 * - Current recipe object
@@ -67,7 +66,9 @@ const controlRecipe = async (id) => {
         try{
         console.log(`Hace la operación con la Id siguiente ------>>> ${id}`)
         //Prepare UI for change
-        renderLoader(elements.recipe)
+        clearRecipe();
+        renderLoader(elements.recipe);
+        if(state.search) searchView.highLigthSelect(id);
         //Create new recipe object
         state.recipe = new Recipe(id);
         await state.recipe.getRecipe(); 
