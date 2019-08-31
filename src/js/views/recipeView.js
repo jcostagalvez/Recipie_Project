@@ -8,21 +8,22 @@ export const clearRecipe = () =>{
 
 const formatCount = count => {
     if(count){
+        let newCount;
+        const [int, dec] = count.toString().split('.').map(el => parseInt(el, 10));
 
-        const [int, dec] = count.toString.split('.').map(el => parseInt(el, 10));
-
-        if (!dec) return count;
+        if (!dec) {
+            return count;
+        };
 
         if(int === 0){
-
             const fr = new Fraction(count);
-            return `${fr.numerator}/${fr.denominator}`;
+            newCount = (fr.numerator/ fr.denominator) ;
+            return `${newCount.toFixed(1)}`;
 
-        }else{
-
-            const fr = new Fraction(count - init);
-
-            return `${init} and ${fr.numerator}/${fr.denominator}`;
+        }else if (int !== 0){
+            const fr = new Fraction(count - int);
+             newCount = (fr.numerator/ fr.denominator) ;
+            return `${newCount.toFixed(1)}`;
         };
         
     };
@@ -35,7 +36,7 @@ const createIngredient = ingredient => `
         <svg class="recipe__icon">
             <use href="img/icons.svg#icon-check"></use>
         </svg>
-        <div class="recipe__count">${ingredient.quantity}</div>
+        <div class="recipe__count">${formatCount(ingredient.quantity)}</div>
         <div class="recipe__ingredient">
             <span class="recipe__unit">${ingredient.unit}</span>
             ${ingredient.ingredient}

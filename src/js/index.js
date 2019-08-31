@@ -64,7 +64,6 @@ const controlRecipe = async (id) => {
 
     if(id){
         try{
-        console.log(`Hace la operación con la Id siguiente ------>>> ${id}`)
         //Prepare UI for change
         clearRecipe();
         renderLoader(elements.recipe);
@@ -72,7 +71,6 @@ const controlRecipe = async (id) => {
         //Create new recipe object
         state.recipe = new Recipe(id);
         await state.recipe.getRecipe(); 
-        //console.log(state.recipe.parseIngredients());
         state.recipe.parseIngredients();   
         //Calculate Serving and Time
        state.recipe.calcTime();
