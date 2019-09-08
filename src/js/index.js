@@ -7,7 +7,7 @@ console.log(`I calculate some form imported function from searchView ${priceCoff
 import Search from './models/search';
 import Recipe from './models/recipe';
 import * as searchView from './views/searchViews';
-import {renderRecipe, clearRecipe} from './views/recipeView';
+import {renderRecipe, clearRecipe, updateIngridients} from './views/recipeView';
 import {elements, renderLoader, clearLoader} from './views/base';
 /* Global state of the app
 * - Search object 
@@ -99,6 +99,21 @@ window.addEventListener('load', () => {
     controlRecipe(returnId);
     }
 });
+
+elements.recipe.addEventListener('click', e => {
+
+    if(e.target.matches('.btn-decrese, .btn-decrese *')){
+        if(state.recipe.servings > 1){
+            state.recipe.updateServings('dec');
+            updateIngridients( state.recipe);
+        };
+    } else if(e.target.matches('.btn-increse, .btn-increse *')){
+        state.recipe.updateServings('inc');
+        updateIngridients( state.recipe);
+    };
+
+    console.log(state.recipe);
+})
         
 
 

@@ -107,13 +107,12 @@ export default class Recipe{
 
     updateServings(type){
         //servings
-        const newservings = type === 'dec' ? this.servings = -1 : this.servings = + 1;
-        
+        const newservings = type === 'dec' ? this.servings  -1 : this.servings  + 1;
+        console.log(type);
         //Ingridients
         this.ingredients.forEach(ing =>{
-            this.ingredients *= (newservings/this.ingredients);
+            ing.quantity = ing.quantity * (newservings/this.servings);
         });
         this.servings = newservings;
-
     };
 }
